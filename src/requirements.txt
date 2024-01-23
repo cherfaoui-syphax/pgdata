@@ -1,6 +1,6 @@
 flask
-plotly.graph_objects 
+plotly
 requests
 datetime
 yfinance 
-pand
+pandas
