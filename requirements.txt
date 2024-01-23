@@ -1,0 +1,6 @@
+flask
+plotly.graph_objects 
+requests
+datetime
+yfinance 
+pand
