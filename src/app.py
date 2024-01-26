@@ -9,6 +9,8 @@ from plotly.offline import plot
 import plotly.express as px
 import math
 import numpy as np
+import plotly.io as io
+
 
 
 
@@ -102,13 +104,13 @@ def calculate_cagr(df):
 
 def show_portefeuille_value(df):
   fig = go.Figure([go.Scatter(x=df.index , y=df['somme'])])
-  plot_html = plot(fig, output_type='div')
+  plot_html = io.to_html(fig, full_html=False)
   return plot_html
 
 
 def show_portefeuille_value_mensu(df):
   fig = go.Figure([go.Scatter(x=df.index , y=df["somme mensu"] , name="avec mensualité") , go.Scatter(x=df.index , y=df["somme investi"],name="somme investi") , go.Scatter(x=df.index , y=df['somme'] , name="sans mensualité")])
-  plot_html = plot(fig, output_type='div')
+  plot_html = io.to_html(fig, full_html=False)
   return plot_html
 
 
@@ -116,7 +118,8 @@ def show_portefeuille_value_mensu(df):
 
 def show_somme_investi(df):
   fig = go.Figure([go.Scatter(x=df.index , y=df["somme investi"])])
-  plot_html = plot(fig, output_type='div')
+  plot_html = io.to_html(fig, full_html=False)
+
   return plot_html
 
 
@@ -158,6 +161,7 @@ def index():
 
     # Convert the figure to HTML
     plot_html = show_portefeuille_value_mensu(df)
+    
 
     return render_template('index.html', plot=plot_html)
 
