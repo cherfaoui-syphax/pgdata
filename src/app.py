@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import plotly.graph_objects as go
 import requests
 import datetime
@@ -162,11 +162,26 @@ def index():
     return render_template('index.html', plot=plot_html)
 
 
-@app.route('/metrics')
+@app.route('/metrics',  methods=['POST'])
 def metrics():
-  df = get_portefeuille_avec_mensualite(p1 , start , 1000,100)
+  data = request.json
+
+  df = get_portefeuille_avec_mensualite(data , start , 1000,100)
   res = compute_metrics(df , 0.01)
   return res
+
+@app.route('/plot' ,  methods=['POST'])
+def plot():
+    data = request.json
+
+    # Get the data from the API
+    df = get_portefeuille_avec_mensualite(data , start , 1000,100)
+
+    # Convert the figure to HTML
+    plot_html = show_portefeuille_value_mensu(df)
+
+    return plot_html
+
 
 if __name__ == '__main__':
     app.run(debug=True)
